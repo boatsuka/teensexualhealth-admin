@@ -15,7 +15,7 @@ import ProfileSchool from "./pages/school/ProfileSchool";
 function App() {
   return (
     <React.Fragment>
-      <BrowserRouter basename="admin">
+      <BrowserRouter>
         <Routes>
           <Route path="/">
             <Route index element={<Dashboard />} />
