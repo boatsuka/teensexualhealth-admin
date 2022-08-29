@@ -1,6 +1,6 @@
 import React from 'react'
 
-function SubModule() {
+const SubModule = () => {
   return (
     <div>SubModule</div>
   )
