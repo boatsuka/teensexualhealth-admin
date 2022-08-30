@@ -8,6 +8,8 @@ import {
   CardActions,
 } from "@mui/material";
 import React from "react";
+import * as axios from 'axios'
+import { toast } from 'react-toastify';
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
@@ -15,9 +17,30 @@ function AddSchool() {
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
 
+  const onSubmit = async (data) => {
+    await axios.post(`${process.env.REACT_APP_API}/school/create`, {
+      school_thai_name: data.school_thai_name,
+      school_address_number: data.school_address_number,
+      school_zone: data.school_zone,
+      school_english_name: data.school_english_name,
+      school_road: data.school_road,
+      school_subdistrict: data.school_subdistrict,
+      school_district: data.school_district,
+      school_province: data.school_province,
+      school_postcode: data.school_postcode,
+      coordinate_teacher_id: 0,
+      // school_code_url: `${process.env.REACT_APP_WEB_BASE}/?school=0`,
+    }).then(() => {
+      toast.success('เพิ่มข้อมูลโรงเรียนสำเร็จ')
+      navigate('/school')
+    }).catch((err) => {
+      toast.error(err)
+    })
+  }
+
   return (
     <div>
-      <form onSubmit={handleSubmit()}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Card>
           <CardContent sx={{ padding: 4 }}>
             <Typography gutterBottom variant="h6">

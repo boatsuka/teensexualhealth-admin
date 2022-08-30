@@ -12,55 +12,55 @@ function School() {
 
   const columns = [
     {
-      field: "school_thai_name",
-      headerName: "ชื่อโรงเรียน",
-      width: 250,
+      field: 'school_thai_name',
+      headerName: 'ชื่อโรงเรียน',
+      width: 200,
     },
     {
-      field: "school_english_name",
-      headerName: "ชื่อโรงเรียน อังกฤษ",
+      field: 'school_english_name',
+      headerName: 'ชื่อโรงเรียน อังกฤษ',
       width: 300,
     },
     {
-      field: "school_code_url",
-      headerName: "ลิ้งค์",
-      align:'center',
+      field: 'school_code_url',
+      headerName: 'ลิ้งค์',
+      align: 'center',
       width: 200,
       renderCell: (params) => (
-        <Box sx={{ justifyContent: "center" }}>
+        <Box sx={{ justifyContent: 'center' }}>
           <Link
-            onClick={() => window.open(params.row.school_code_url, "_blank")}
+            onClick={() => window.open(params.row.school_code_url, '_blank')}
           >
-            <QRCode size="128" value={params.row.school_code_url} />
+            <QRCode size={128} value={params.row.school_code_url} />
           </Link>
         </Box>
       ),
     },
     {
-      field: "actions",
-      type: "actions",
+      field: 'actions',
+      type: 'actions',
       width: 350,
       getActions: (params) => [
         <>
           <Button
-            variant="contained"
-            size="medium"
-            color="success"
-            onClick={() => console.log(params.id)}
+            variant='contained'
+            size='medium'
+            color='success'
+            onClick={() => navigate(`/school/profile/${params.id}`)}
           >
             ดูข้อมูล
           </Button>
           <Button
-            variant="contained"
-            size="medium"
-            onClick={() => console.log(params.id)}
+            variant='contained'
+            size='medium'
+            onClick={() => navigate(`/school/edit/${params.id}`)}
           >
             แก้ไขข้อมูล
           </Button>
           <Button
-            variant="contained"
-            size="medium"
-            color="error"
+            variant='contained'
+            size='medium'
+            color='error'
             onClick={() => console.log(params.id)}
           >
             ลบข้อมูล
@@ -68,7 +68,7 @@ function School() {
         </>,
       ],
     },
-  ];
+  ]
 
   const GetSchoolData = async () => {
     await axios
