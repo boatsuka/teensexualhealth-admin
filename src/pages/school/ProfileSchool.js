@@ -25,46 +25,46 @@ function ProfileSchool() {
 
   const columns = [
     {
-      field: 'teacher_thai_firstname',
-      headerName: 'ชื่อ',
+      field: "teacher_thai_firstname",
+      headerName: "ชื่อ",
       width: 200,
     },
     {
-      field: 'teache_thai_lastname',
-      headerName: 'นามสกุล',
+      field: "teache_thai_lastname",
+      headerName: "นามสกุล",
       width: 200,
     },
     {
-      field: 'teacher_nick_name',
-      headerName: 'ชื่อเล่น',
-      align: 'center',
+      field: "teacher_nick_name",
+      headerName: "ชื่อเล่น",
+      align: "center",
       width: 200,
     },
     {
-      field: 'actions',
-      type: 'actions',
+      field: "actions",
+      type: "actions",
       width: 350,
       getActions: (params) => [
         <>
           <Button
-            variant='contained'
-            size='medium'
-            color='success'
+            variant="contained"
+            size="medium"
+            color="success"
             onClick={() => navigate(`/teacher/profile/${params.id}`)}
           >
             ดูข้อมูล
           </Button>
           <Button
-            variant='contained'
-            size='medium'
-            onClick={() => console.log(params.id)}
+            variant="contained"
+            size="medium"
+            onClick={() => navigate(`/teacher/edit/${params.id}`)}
           >
             แก้ไขข้อมูล
           </Button>
           <Button
-            variant='contained'
-            size='medium'
-            color='error'
+            variant="contained"
+            size="medium"
+            color="error"
             onClick={() => console.log(params.id)}
           >
             ลบข้อมูล
@@ -72,7 +72,7 @@ function ProfileSchool() {
         </>,
       ],
     },
-  ]
+  ];
 
   const GetSchoolById = React.useCallback(async () => {
     await axios
