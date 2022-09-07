@@ -27,6 +27,8 @@ import AddSubModule from "./pages/submodule/AddSubModule";
 import EditSubModule from "./pages/submodule/EditSubModule";
 import ProfileSubModule from "./pages/submodule/ProfileSubModule";
 import SubModuleStudent from "./pages/student/SubModuleStudent";
+import AddSubQuiz from "./pages/quiz/AddQuiz";
+import AddSubmoduleVideo from "./pages/vdo/AddSubModuleVdo";
 
 function App() {
   return (
@@ -34,7 +36,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<Dashboard />} />
+            <Route index element={<School />} />
             <Route path="school">
               <Route index element={<School />} />
               <Route path="add" element={<AddSchool />} />
@@ -66,6 +68,8 @@ function App() {
             <Route path="submodule">
               <Route index element={<SubModule />} />
               <Route path="add" element={<AddSubModule />} />
+              <Route path="add/quiz/:id" element={<AddSubQuiz />} />
+              <Route path="add/vdo/:id" element={<AddSubmoduleVideo />} />
               <Route path="edit/:id" element={<EditSubModule />} />
               <Route path="profile/:id" element={<ProfileSubModule />} />
             </Route>

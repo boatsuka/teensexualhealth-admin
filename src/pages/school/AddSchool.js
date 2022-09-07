@@ -29,7 +29,6 @@ function AddSchool() {
       school_province: data.school_province,
       school_postcode: data.school_postcode,
       coordinate_teacher_id: 0,
-      // school_code_url: `${process.env.REACT_APP_WEB_BASE}/?school=0`,
     }).then(() => {
       toast.success('เพิ่มข้อมูลโรงเรียนสำเร็จ')
       navigate('/school')

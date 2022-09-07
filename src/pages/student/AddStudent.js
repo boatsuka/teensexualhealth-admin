@@ -22,7 +22,7 @@ function AddStudent() {
 
   const onSubmit = async (data) => {
     await axios
-      .post(`${process.env.REACT_APP_API}/school/create`, {
+      .post(`${process.env.REACT_APP_API}/student/create`, {
         student_fisrtname: data.student_fisrtname,
         student_lastname: data.student_lastname,
         student_level: data.student_level,
@@ -110,7 +110,7 @@ function AddStudent() {
                   fullWidth
                   size="small"
                   style={{ marginTop: 16 }}
-                  {...register("student_initial_name")}
+                  {...register("student_study_year")}
                 >
                   <MenuItem value={1}>มัธยมศึกษาปีที่ 1</MenuItem>
                   <MenuItem value={2}>มัธยมศึกษาปีที่ 2</MenuItem>

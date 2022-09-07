@@ -52,14 +52,6 @@ const Header = () => {
           </List>
           <Divider />
           <List>
-            <ListItem button component={Link} to='/teacher'>
-              <ListItemIcon>
-                <People />
-              </ListItemIcon>
-              <ListItemText primary='คุณครู' />
-            </ListItem>
-          </List>
-          <List>
             <ListItem button component={Link} to='/school'>
               <ListItemIcon>
                 <School />
