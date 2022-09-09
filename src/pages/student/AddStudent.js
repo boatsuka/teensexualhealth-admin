@@ -22,7 +22,7 @@ function AddStudent() {
 
   const onSubmit = async (data) => {
     await axios
-      .post(`${process.env.REACT_APP_API}/school/create`, {
+      .post(`${process.env.REACT_APP_API}/student/create`, {
         student_fisrtname: data.student_fisrtname,
         student_lastname: data.student_lastname,
         student_level: data.student_level,
