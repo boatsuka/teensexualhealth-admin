@@ -110,7 +110,7 @@ function AddStudent() {
                   fullWidth
                   size="small"
                   style={{ marginTop: 16 }}
-                  {...register("student_initial_name")}
+                  {...register("student_study_year")}
                 >
                   <MenuItem value={1}>มัธยมศึกษาปีที่ 1</MenuItem>
                   <MenuItem value={2}>มัธยมศึกษาปีที่ 2</MenuItem>
