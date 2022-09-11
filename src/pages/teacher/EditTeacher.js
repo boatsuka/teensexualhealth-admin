@@ -19,9 +19,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 const EditTeacher = () => {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { setValue, register, handleSubmit } = useForm()
-  const [data, setData] = React.useState([])
   const [school, setSchool] = React.useState([])
+  const { setValue, register, handleSubmit } = useForm()
 
   const GetSchoolData = async () => {
     await axios
@@ -40,14 +39,13 @@ const EditTeacher = () => {
           'teacher_nick_name',
         ]
         fields.forEach((field) => {
-          setData(res.data[0])
           setValue(field, res.data[0].teacher[field])
         })
       })
       .catch((err) => {
         toast.error(err)
       })
-  }, [id, setData, setValue])
+  }, [id, setValue])
 
    const onEditTeacher = async (data) => {
      await axios

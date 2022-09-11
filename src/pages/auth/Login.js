@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from "react";
 import * as axios from "axios";
 import { useForm } from "react-hook-form";
@@ -43,3 +44,14 @@ function Login() {
 }
 
 export default Login;
+=======
+import React from 'react'
+
+function Login() {
+  return (
+    <div>Login</div>
+  )
+}
+
+export default Login
+>>>>>>> be0301d9262fccc941024d885b597fe39a82c085
