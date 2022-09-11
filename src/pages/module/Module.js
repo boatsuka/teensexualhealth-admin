@@ -1,41 +1,17 @@
-import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import React from "react";
 import * as axios from "axios";
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogContent,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-  Toolbar,
-} from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { toast } from "react-toastify";
-import { useForm } from "react-hook-form";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import PreviewIcon from "@mui/icons-material/Preview";
-
+import { useNavigate } from "react-router-dom";
+import { DataGrid, GridToolbarContainer } from "@mui/x-data-grid";
 
 function Module() {
+  const navigate = useNavigate();
   const [data, setData] = React.useState([]);
-  const [open, setOpen] = React.useState(false);
-  const { reset, register, handleSubmit } = useForm();
 
   React.useEffect(() => {
     GetModuleData();
   }, []);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const columns = [
     {
@@ -63,23 +39,25 @@ function Module() {
     {
       field: "actions",
       type: "actions",
-      width: 200,
+      width: 350,
       getActions: (params) => [
-        <GridActionsCellItem
-          icon={<PreviewIcon />}
-          label="Preview"
-          onClick={() => console.log(params.id)}
-        />,
-        <GridActionsCellItem
-          icon={<EditIcon />}
-          label="Edit"
-          onClick={() => console.log(params.id)}
-        />,
-        <GridActionsCellItem
-          icon={<DeleteIcon />}
-          label="Delete"
-          onClick={() => DeleteModuleData(params.id)}
-        />,
+        <>
+          <Button
+            variant="contained"
+            size="medium"
+            onClick={() => navigate(`/module/edit/${params.id}`)}
+          >
+            แก้ไขข้อมูล
+          </Button>
+          <Button
+            variant="contained"
+            size="medium"
+            color="error"
+            onClick={() => onDelete(params.id)}
+          >
+            ลบข้อมูล
+          </Button>
+        </>,
       ],
     },
   ];
@@ -88,10 +66,10 @@ function Module() {
     await axios
       .get(`${process.env.REACT_APP_API}/module`)
       .then((res) => setData(res.data))
-      .catch((err) => console.error(err));
+      .catch((err) => toast.error(err));
   };
 
-  const DeleteModuleData = async (id) => {
+  const onDelete = async (id) => {
     await axios
       .delete(`${process.env.REACT_APP_API}/module/delete/${id}`)
       .then(() => {
@@ -103,97 +81,35 @@ function Module() {
       });
   };
 
-  const onSubmit = async (data) => {
-    await axios.post(`${process.env.REACT_APP_API}/module/create`, {
-      module_name: data.module_name,
-      module_level: data.module_level,
-      module_description: data.module_description,
-      module_image_path: "string",
-      modulecol: data.modulecol,
-      module_legth: data.module_legth,
-    });
-    await toast.success("เพิ่มข้อมูลผุ้ใช้งานสำเร็จ");
-    await setOpen(false);
-    await reset();
-    await GetModuleData();
-  };
-
-  const ShowDialog = () => {
-    return (
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogContent>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <TextField
-              fullWidth
-              label="ชื่อหน่วยการเรียนรู้"
-              style={{ marginTop: 16 }}
-              {...register("module_name")}
-            />
-            <InputLabel
-              id="demo-simple-select-standard-label"
-              style={{ marginTop: 18 }}
-            >
-              ระดับกาเรียนรู้
-            </InputLabel>
-            <Select
-              fullWidth
-              label="ระดับกาเรียนรู้"
-              style={{ marginTop: 18 }}
-              {...register("module_level")}
-              labelId="demo-simple-select-standard-label"
-            >
-              <MenuItem value="A">Advance</MenuItem>
-              <MenuItem value="B">Basic</MenuItem>
-            </Select>
-            <TextField
-              fullWidth
-              label="รายละเอียด"
-              style={{ marginTop: 16 }}
-              {...register("module_description")}
-            />
-            <TextField
-              fullWidth
-              label="อื่นๆ"
-              style={{ marginTop: 16 }}
-              {...register("modulecol")}
-            />
-            <TextField
-              fullWidth
-              label="ขอบเขตหน่วยการเรียนรู้"
-              style={{ marginTop: 16, marginBottom: 16 }}
-              {...register("module_legth")}
-            />
-            <Button type="submit" fullWidth variant="outlined" autoFocus>
-              ยืนยัน
-            </Button>
-          </form>
-        </DialogContent>
-      </Dialog>
-    );
-  };
-
   return (
     <>
-      <Toolbar>
-        <Button variant="contained" onClick={handleClickOpen}>
-          เพิ่มข้อมูลหน่วยการเรียนรู้
-        </Button>
-      </Toolbar>
-      <Box sx={{ height: 400, width: "100%", top: 100 }}>
+      <Box sx={{ height: 600, width: "100%", top: 100 }}>
         <DataGrid
           rows={data}
           columns={columns}
           pageSize={5}
           rowsPerPageOptions={[5]}
+          components={{
+            Toolbar: () => {
+              return (
+                <GridToolbarContainer sx={{ justifyContent: "flex-end" }}>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      top: 10,
+                      right: 10,
+                    }}
+                    onClick={() => navigate("/module/add")}
+                  >
+                    เพิ่มข้อมูลหน่วยการเรียนรู้
+                  </Button>
+                </GridToolbarContainer>
+              );
+            },
+          }}
           getRowId={(row) => row.module_id}
         />
       </Box>
-      {ShowDialog()}
     </>
   );
 }

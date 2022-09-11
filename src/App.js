@@ -9,7 +9,6 @@ import Module from "./pages/module/Module";
 import School from "./pages/school/School";
 import AddSchool from "./pages/school/AddSchool";
 import EditSchool from "./pages/school/EditSchool";
-import Dashboard from "./pages/Dashboard";
 import Student from "./pages/student/Student";
 import AddStudent from "./pages/student/AddStudent";
 import EditStudent from "./pages/student/EditStudent";
@@ -19,7 +18,6 @@ import SubModule from "./pages/submodule/SubModule";
 import ProfileSchool from "./pages/school/ProfileSchool";
 import AddModule from "./pages/module/AddModule";
 import EditModule from "./pages/module/EditModule";
-import ProfileModule from "./pages/module/ProfileModule";
 import AddTeacher from "./pages/teacher/AddTeacher";
 import EditTeacher from "./pages/teacher/EditTeacher";
 import ProfileTeacher from "./pages/teacher/ProfileTeacher";
@@ -29,6 +27,7 @@ import ProfileSubModule from "./pages/submodule/ProfileSubModule";
 import SubModuleStudent from "./pages/student/SubModuleStudent";
 import AddSubQuiz from "./pages/quiz/AddQuiz";
 import AddSubmoduleVideo from "./pages/vdo/AddSubModuleVdo";
+import Login from "./pages/auth/Login";
 
 function App() {
   return (
@@ -63,7 +62,6 @@ function App() {
               <Route index element={<Module />} />
               <Route path="add" element={<AddModule />} />
               <Route path="edit/:id" element={<EditModule />} />
-              <Route path="profile/:id" element={<ProfileModule />} />
             </Route>
             <Route path="submodule">
               <Route index element={<SubModule />} />
@@ -74,6 +72,9 @@ function App() {
               <Route path="profile/:id" element={<ProfileSubModule />} />
             </Route>
             <Route path="*" element={<Error />} />
+          </Route>
+          <Route path="auth">
+            <Route index path="login" element={<Login />} />
           </Route>
         </Routes>
       </BrowserRouter>

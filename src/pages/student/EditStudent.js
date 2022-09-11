@@ -86,8 +86,8 @@ function EditStudent() {
                   style={{ marginTop: 16 }}
                   {...register("student_initial_name")}
                 >
-                  <MenuItem value="นาย">นาย</MenuItem>
-                  <MenuItem value="นาง">นางสาว</MenuItem>
+                  <MenuItem value="เด็กชาย">เด็กชาย</MenuItem>
+                  <MenuItem value="เด็กหญิง">เด็กหญิง</MenuItem>
                 </Select>
               </Grid>
               <Grid item xs={6}>

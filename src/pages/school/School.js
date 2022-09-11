@@ -4,7 +4,7 @@ import QRCode from "react-qr-code";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, Link } from "@mui/material";
 import { DataGrid, GridToolbarContainer } from "@mui/x-data-grid";
-
+import { toast } from "react-toastify";
 
 function School() {
   const navigate = useNavigate();
@@ -12,24 +12,24 @@ function School() {
 
   const columns = [
     {
-      field: 'school_thai_name',
-      headerName: 'ชื่อโรงเรียน',
+      field: "school_thai_name",
+      headerName: "ชื่อโรงเรียน",
       width: 200,
     },
     {
-      field: 'school_english_name',
-      headerName: 'ชื่อโรงเรียน อังกฤษ',
+      field: "school_english_name",
+      headerName: "ชื่อโรงเรียน อังกฤษ",
       width: 300,
     },
     {
-      field: 'school_code_url',
-      headerName: 'ลิ้งค์',
-      align: 'center',
+      field: "school_code_url",
+      headerName: "ลิ้งค์",
+      align: "center",
       width: 200,
       renderCell: (params) => (
-        <Box sx={{ justifyContent: 'center' }}>
+        <Box sx={{ justifyContent: "center" }}>
           <Link
-            onClick={() => window.open(params.row.school_code_url, '_blank')}
+            onClick={() => window.open(params.row.school_code_url, "_blank")}
           >
             <QRCode size={128} value={params.row.school_code_url} />
           </Link>
@@ -37,44 +37,56 @@ function School() {
       ),
     },
     {
-      field: 'actions',
-      type: 'actions',
+      field: "actions",
+      type: "actions",
       width: 350,
       getActions: (params) => [
         <>
           <Button
-            variant='contained'
-            size='medium'
-            color='success'
+            variant="contained"
+            size="medium"
+            color="success"
             onClick={() => navigate(`/school/profile/${params.id}`)}
           >
             ดูข้อมูล
           </Button>
           <Button
-            variant='contained'
-            size='medium'
+            variant="contained"
+            size="medium"
             onClick={() => navigate(`/school/edit/${params.id}`)}
           >
             แก้ไขข้อมูล
           </Button>
           <Button
-            variant='contained'
-            size='medium'
-            color='error'
-            onClick={() => console.log(params.id)}
+            variant="contained"
+            size="medium"
+            color="error"
+            onClick={() => onDelete(params.id)}
           >
             ลบข้อมูล
           </Button>
         </>,
       ],
     },
-  ]
+  ];
 
   const GetSchoolData = async () => {
     await axios
       .get(`${process.env.REACT_APP_API}/school`)
       .then((res) => setData(res.data))
       .catch((err) => console.error(err));
+  };
+
+  const onDelete = async (id) => {
+    await axios
+      .delete(`${process.env.REACT_APP_API}/school/remove-hard/${id}`)
+      .then((res) => {
+        toast.success("ลบข้อมูลโรงเรียนแล้ว");
+        GetSchoolData();
+      })
+      .catch((err) => {
+        toast.error(err);
+      });
   };
 
   React.useEffect(() => {

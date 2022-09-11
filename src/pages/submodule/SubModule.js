@@ -47,35 +47,48 @@ function SubModule() {
     {
       field: "actions",
       type: "actions",
-      width: 200,
+      width: 350,
       getActions: (params) => [
-        <GridActionsCellItem
-          icon={<PreviewIcon />}
-          label="Preview"
-          onClick={() => navigate(`/school/${params.id}`)}
-        />,
-        <GridActionsCellItem
-          icon={<VideoCameraFront />}
-          label="Vidoe"
-          onClick={() => navigate(`/submodule/add/vdo/${params.id}`)}
-        />,
-        <GridActionsCellItem
-          icon={<EditIcon />}
-          label="Edit"
-          onClick={() => navigate(`/submodule/add/quiz/${params.id}`)}
-        />,
-        <GridActionsCellItem
-          icon={<DeleteIcon />}
-          label="Delete"
-          onClick={() => console.log(params.id)}
-        />,
+        <>
+          <Button
+            variant="contained"
+            size="medium"
+            color="success"
+            onClick={() => navigate(`/submodule/add/vdo/${params.id}`)}
+          >
+            ดูข้อมูล
+          </Button>
+          <Button
+            variant="contained"
+            size="medium"
+            color="success"
+            onClick={() => navigate(`/submodule/add/vdo/${params.id}`)}
+          >
+            วีดีโอ
+          </Button>
+          <Button
+            variant="contained"
+            size="medium"
+            onClick={() => navigate(`/submodule/add/quiz/${params.id}`)}
+          >
+            คำถาม
+          </Button>
+          <Button
+            variant="contained"
+            size="medium"
+            color="error"
+            // onClick={() => onDelete(params.id)}
+          >
+            ลบข้อมูล
+          </Button>
+        </>,
       ],
     },
   ];
 
   return (
     <>
-      <Box sx={{ height: 400, width: "100%", top: 100 }}>
+      <Box sx={{ height: 600, width: "100%", top: 100 }}>
         <DataGrid
           rows={submodule}
           columns={columns}
