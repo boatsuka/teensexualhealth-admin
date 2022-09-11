@@ -46,7 +46,7 @@ function AddStudent() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Card>
           <CardContent sx={{ padding: 4 }}>
-            <Typography gutterBottom variant="h6">
+            <Typography gutterBottom variant='h6'>
               ฟอร์มกรอกข้อมูลลงทะเบียนนักเรียน
             </Typography>
             <Grid
@@ -57,32 +57,32 @@ function AddStudent() {
               <Grid item xs={6}>
                 <Select
                   fullWidth
-                  size="small"
+                  size='small'
                   style={{ marginTop: 16 }}
-                  {...register("student_initial_name")}
+                  {...register('student_initial_name')}
                 >
-                  <MenuItem value="นาย">นาย</MenuItem>
-                  <MenuItem value="นาง">นางสาว</MenuItem>
+                  <MenuItem value='เด็กชาย'>เด็กชาย</MenuItem>
+                  <MenuItem value='เด็กหญิง'>เด็กหญิง</MenuItem>
                 </Select>
               </Grid>
               <Grid item xs={6}>
                 <TextField
                   style={{ marginTop: 16 }}
                   fullWidth
-                  type="text"
-                  label="ชื่อ"
-                  size="small"
-                  {...register("student_fisrtname")}
+                  type='text'
+                  label='ชื่อ'
+                  size='small'
+                  {...register('student_fisrtname')}
                 />
               </Grid>
               <Grid item xs={6}>
                 <TextField
                   style={{ marginTop: 16 }}
                   fullWidth
-                  type="text"
-                  label="นามสกุล"
-                  size="small"
-                  {...register("student_lastname")}
+                  type='text'
+                  label='นามสกุล'
+                  size='small'
+                  {...register('student_lastname')}
                 />
               </Grid>
               <br />
@@ -90,27 +90,27 @@ function AddStudent() {
                 <TextField
                   style={{ marginTop: 16 }}
                   fullWidth
-                  label="ชื่อเล่น"
-                  type="text"
-                  size="small"
-                  {...register("student_nickname")}
+                  label='ชื่อเล่น'
+                  type='text'
+                  size='small'
+                  {...register('student_nickname')}
                 />
               </Grid>
               <Grid item xs={6}>
                 <TextField
                   fullWidth
-                  label="ระดับความสามารถ"
-                  size="small"
+                  label='ระดับความสามารถ'
+                  size='small'
                   style={{ marginTop: 16 }}
-                  {...register("student_level")}
+                  {...register('student_level')}
                 />
               </Grid>
               <Grid item xs={6}>
                 <Select
                   fullWidth
-                  size="small"
+                  size='small'
                   style={{ marginTop: 16 }}
-                  {...register("student_study_year")}
+                  {...register('student_study_year')}
                 >
                   <MenuItem value={1}>มัธยมศึกษาปีที่ 1</MenuItem>
                   <MenuItem value={2}>มัธยมศึกษาปีที่ 2</MenuItem>
@@ -123,9 +123,9 @@ function AddStudent() {
               <Grid item xs={12}>
                 <Select
                   fullWidth
-                  size="small"
+                  size='small'
                   style={{ marginTop: 16 }}
-                  {...register("student_dragdrop")}
+                  {...register('student_dragdrop')}
                 >
                   <MenuItem value={true}>ทำได้</MenuItem>
                   <MenuItem value={false}>ทำไม่ได้</MenuItem>
@@ -136,17 +136,17 @@ function AddStudent() {
           <CardActions>
             <Button
               fullWidth
-              variant="contained"
-              color="primary"
-              type="submit"
+              variant='contained'
+              color='primary'
+              type='submit'
               sx={{ marginRight: 1 }}
             >
               บันทึก
             </Button>
             <Button
-              variant="outlined"
+              variant='outlined'
               fullWidth
-              onClick={() => navigate("/school")}
+              onClick={() => navigate('/school')}
             >
               ยกเลิก
             </Button>
@@ -154,7 +154,7 @@ function AddStudent() {
         </Card>
       </form>
     </div>
-  );
+  )
 }
 
 export default AddStudent;
