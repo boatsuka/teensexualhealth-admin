@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Grid,
   Card,
   Button,
@@ -24,6 +25,18 @@ const ProfileTeacher = () => {
   const [student, setStudent] = React.useState([])
 
   const columns = [
+    {
+      field: "student_avatar_path",
+      headerName: "avatar",
+      width: 200,
+      renderCell: (params) => {
+        return (
+          <>
+            <Avatar src={params.row.student_avatar_path} />
+          </>
+        );
+      }
+    },
     {
       field: 'student_fisrtname',
       headerName: 'ชื่อ',
@@ -71,7 +84,7 @@ const ProfileTeacher = () => {
             variant='contained'
             size='medium'
             color='error'
-            onClick={() => console.log(params.id)}
+            onClick={() => onDelete(params.id)}
           >
             ลบข้อมูล
           </Button>
@@ -79,6 +92,14 @@ const ProfileTeacher = () => {
       ],
     },
   ]
+
+  const onDelete = async (id) => {
+    await axios.delete(`${process.env.REACT_APP_API}/student/remove-hard/${id}`).then((res) => {
+      toast.success('ลบข้อมูลแล้ว')
+    }).catch((err) => {
+      toast.error(err)
+    })
+  }
 
   const GetTeacherById = React.useCallback(async () => {
     await axios
@@ -90,17 +111,16 @@ const ProfileTeacher = () => {
           'teacher_nick_name',
         ]
         fields.forEach((field) => {
-          setTeacher(res.data[0])
-          setStudent(res.data[0].students)
           setValue(field, res.data[0][field])
         })
 
-        console.log(res.data[0].students)
+        setTeacher(res.data[0])
+        setStudent(res.data[0].students)
       })
       .catch((err) => {
         toast.error(err)
       })
-  }, [id, setStudent, setValue])
+  }, [id, setStudent, setValue, setTeacher])
 
   React.useEffect(() => {
     GetTeacherById()

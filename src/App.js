@@ -28,6 +28,7 @@ import SubModuleStudent from "./pages/student/SubModuleStudent";
 import AddSubQuiz from "./pages/quiz/AddQuiz";
 import AddSubmoduleVideo from "./pages/vdo/AddSubModuleVdo";
 import Login from "./pages/auth/Login";
+import ModuleStudent from "./pages/student/ModuleStudent";
 
 function App() {
   return (
@@ -54,6 +55,10 @@ function App() {
               <Route path='profile/:id' element={<ProfileStudent />} />
               <Route
                 path=':studentId/module/:moduleId'
+                element={<ModuleStudent />}
+              />
+              <Route
+                path=':studentId/submodule/:submoduleId'
                 element={<SubModuleStudent />}
               />
             </Route>

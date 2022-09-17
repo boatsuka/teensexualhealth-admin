@@ -49,7 +49,6 @@ function EditStudent() {
           'student_nickname',
           'student_study_year',
           'student_initial_name',
-          'teacher_id',
           'student_dragdrop',
         ]
         fields.forEach((field) => {
@@ -63,14 +62,14 @@ function EditStudent() {
 
   const onEditStudent = async (data) => {
     await axios
-      .patch(`${process.env.REACT_APP_API}/student/${id}`, {
+      .post(`${process.env.REACT_APP_API}/student/edit/${id}`, {
         student_fisrtname: data.student_fisrtname,
         student_lastname: data.student_lastname,
         student_level: data.student_level,
         student_nickname: data.student_nickname,
         student_study_year: data.student_study_year,
         student_initial_name: data.student_initial_name,
-        teacher_id: id,
+        teacher: id,
         student_dragdrop: data.student_dragdrop,
         student_avatar_path: data.student_avatar_path,
       })
@@ -143,13 +142,17 @@ function EditStudent() {
                 />
               </Grid>
               <Grid item xs={6}>
-                <InputLabel>ระดับความสามารถ</InputLabel>
-                <TextField
+              <InputLabel>ระดับความสามารถ</InputLabel>
+                <Select
                   fullWidth
                   size='small'
+                  label='ระดับความสามารถ'
                   style={{ marginTop: 16 }}
                   {...register('student_level')}
-                />
+                >
+                  <MenuItem value={0}>Basic</MenuItem>
+                  <MenuItem value={1}>Advance</MenuItem>
+                </Select>
               </Grid>
               <Grid item xs={6}>
                 <InputLabel>ระดับชั้นปี</InputLabel>
@@ -188,8 +191,8 @@ function EditStudent() {
                   style={{ marginTop: 16 }}
                   {...register('student_avatar_path')}
                 >
-                  {avatar.map((item) => (
-                    <MenuItem value={item}>
+                  {avatar.map((item, index) => (
+                    <MenuItem key={index} value={item}>
                       <img src={item} alt='avatar' width={128} height={128} />
                     </MenuItem>
                   ))}

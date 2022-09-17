@@ -46,11 +46,11 @@ function AddStudent() {
         student_nickname: data.student_nickname,
         student_study_year: data.student_study_year,
         student_initial_name: data.student_initial_name,
-        teacher_id: id,
+        teacher: id,
         student_dragdrop: data.student_dragdrop,
         student_avatar_path: data.student_avatar_path,
       })
-      .then(() => {
+      .then((res) => {
         toast.success('เพิ่มข้อมูลนักเรียนสำเร็จ')
         navigate(`/teacher/profile/${id}`)
       })
@@ -115,13 +115,16 @@ function AddStudent() {
                 />
               </Grid>
               <Grid item xs={6}>
-                <TextField
+                <Select
                   fullWidth
-                  label='ระดับความสามารถ'
                   size='small'
+                  label='ระดับความสามารถ'
                   style={{ marginTop: 16 }}
                   {...register('student_level')}
-                />
+                >
+                  <MenuItem value={0}>Basic</MenuItem>
+                  <MenuItem value={1}>Advance</MenuItem>
+                </Select>
               </Grid>
               <Grid item xs={6}>
                 <Select
@@ -179,7 +182,7 @@ function AddStudent() {
             <Button
               variant='outlined'
               fullWidth
-              onClick={() => navigate('/school')}
+              onClick={() => navigate(`/teacher/profile/${id}`)}
             >
               ยกเลิก
             </Button>
