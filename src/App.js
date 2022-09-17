@@ -34,53 +34,50 @@ function App() {
     <React.Fragment>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<School />} />
-            <Route path="school">
+          <Route element={<Layout />}>
+            <Route path='school'>
               <Route index element={<School />} />
-              <Route path="add" element={<AddSchool />} />
-              <Route path="edit/:id" element={<EditSchool />} />
-              <Route path="profile/:id" element={<ProfileSchool />} />
+              <Route path='add' element={<AddSchool />} />
+              <Route path='edit/:id' element={<EditSchool />} />
+              <Route path='profile/:id' element={<ProfileSchool />} />
             </Route>
-            <Route path="teacher">
+            <Route path='teacher'>
               <Route index element={<Teacher />} />
-              <Route path="add" element={<AddTeacher />} />
-              <Route path="edit/:id" element={<EditTeacher />} />
-              <Route path="profile/:id" element={<ProfileTeacher />} />
+              <Route path='add' element={<AddTeacher />} />
+              <Route path='edit/:id' element={<EditTeacher />} />
+              <Route path='profile/:id' element={<ProfileTeacher />} />
             </Route>
-            <Route path="student">
+            <Route path='student'>
               <Route index element={<Student />} />
-              <Route path="add/:id" element={<AddStudent />} />
-              <Route path="edit/:id" element={<EditStudent />} />
-              <Route path="profile/:id" element={<ProfileStudent />} />
+              <Route path='add/:id' element={<AddStudent />} />
+              <Route path='edit/:id' element={<EditStudent />} />
+              <Route path='profile/:id' element={<ProfileStudent />} />
               <Route
-                path=":studentId/module/:moduleId"
+                path=':studentId/module/:moduleId'
                 element={<SubModuleStudent />}
               />
             </Route>
-            <Route path="module">
+            <Route path='module'>
               <Route index element={<Module />} />
-              <Route path="add" element={<AddModule />} />
-              <Route path="edit/:id" element={<EditModule />} />
+              <Route path='add' element={<AddModule />} />
+              <Route path='edit/:id' element={<EditModule />} />
             </Route>
-            <Route path="submodule">
+            <Route path='submodule'>
               <Route index element={<SubModule />} />
-              <Route path="add" element={<AddSubModule />} />
-              <Route path="add/quiz/:id" element={<AddSubQuiz />} />
-              <Route path="add/vdo/:id" element={<AddSubmoduleVideo />} />
-              <Route path="edit/:id" element={<EditSubModule />} />
-              <Route path="profile/:id" element={<ProfileSubModule />} />
+              <Route path='add' element={<AddSubModule />} />
+              <Route path='add/quiz/:id' element={<AddSubQuiz />} />
+              <Route path='add/vdo/:id' element={<AddSubmoduleVideo />} />
+              <Route path='edit/:id' element={<EditSubModule />} />
+              <Route path='profile/:id' element={<ProfileSubModule />} />
             </Route>
-            <Route path="*" element={<Error />} />
+            <Route path='*' element={<Error />} />
           </Route>
-          <Route path="auth">
-            <Route index path="login" element={<Login />} />
-          </Route>
+          <Route index path='/' element={<Login />} />
         </Routes>
       </BrowserRouter>
       <ToastContainer />
     </React.Fragment>
-  );
+  )
 }
 
 export default App;

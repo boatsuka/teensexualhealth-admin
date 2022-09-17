@@ -12,9 +12,14 @@ import {
 } from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Book, Home, People, School } from '@mui/icons-material'
+import { Book, Home, Outlet, School } from '@mui/icons-material'
 
 const Header = () => {
+  const [role, setRole] = React.useState('')
+  React.useEffect(() => {
+    setRole(localStorage.getItem('user_role'))
+  }, [])
+
   return (
     <>
       <AppBar
@@ -42,7 +47,7 @@ const Header = () => {
         <Box sx={{ overflow: 'auto' }}>
           <List>
             <List>
-              <ListItem button component={Link} to='/'>
+              <ListItem button component={Link} to='/school'>
                 <ListItemIcon>
                   <Home />
                 </ListItemIcon>
@@ -51,30 +56,85 @@ const Header = () => {
             </List>
           </List>
           <Divider />
-          <List>
-            <ListItem button component={Link} to='/school'>
-              <ListItemIcon>
-                <School />
-              </ListItemIcon>
-              <ListItemText primary='โรงเรียน' />
-            </ListItem>
-          </List>
-          <List>
-            <ListItem button component={Link} to='/module'>
-              <ListItemIcon>
-                <Book />
-              </ListItemIcon>
-              <ListItemText primary='หน่วยการเรียนรู้' />
-            </ListItem>
-          </List>
-          <List>
-            <ListItem button component={Link} to='/submodule'>
-              <ListItemIcon>
-                <Book />
-              </ListItemIcon>
-              <ListItemText primary='หน่วยการเรียนรู้ย่อย' />
-            </ListItem>
-          </List>
+          {role === 'SUPER_ADMIN_USER' ? (
+            <>
+              <List>
+                <ListItem button component={Link} to='/school'>
+                  <ListItemIcon>
+                    <School />
+                  </ListItemIcon>
+                  <ListItemText primary='โรงเรียน' />
+                </ListItem>
+              </List>
+              <List>
+                <ListItem button component={Link} to='/module'>
+                  <ListItemIcon>
+                    <Book />
+                  </ListItemIcon>
+                  <ListItemText primary='หน่วยการเรียนรู้' />
+                </ListItem>
+              </List>
+              <List>
+                <ListItem button component={Link} to='/submodule'>
+                  <ListItemIcon>
+                    <Book />
+                  </ListItemIcon>
+                  <ListItemText primary='หน่วยการเรียนรู้ย่อย' />
+                </ListItem>
+              </List>
+              <List>
+                <ListItem
+                  button
+                  to='/'
+                  component={Link}
+                  onClick={() => {
+                    localStorage.clear()
+                  }}
+                >
+                  <ListItemIcon>
+                    <Outlet />
+                  </ListItemIcon>
+                  <ListItemText primary='ออกจากระบบ' />
+                </ListItem>
+              </List>
+            </>
+          ) : role === 'NORMAL_USER_ROLE' ? (
+            <>
+              <List>
+                <ListItem
+                  button
+                  to='/'
+                  component={Link}
+                  onClick={() => {
+                    localStorage.clear()
+                  }}
+                >
+                  <ListItemIcon>
+                    <Outlet />
+                  </ListItemIcon>
+                  <ListItemText primary='ออกจากระบบ' />
+                </ListItem>
+              </List>
+            </>
+          ) : (
+            <>
+              <List>
+                <ListItem
+                  button
+                  to='/'
+                  component={Link}
+                  onClick={() => {
+                    localStorage.clear()
+                  }}
+                >
+                  <ListItemIcon>
+                    <Outlet />
+                  </ListItemIcon>
+                  <ListItemText primary='ออกจากระบบ' />
+                </ListItem>
+              </List>
+            </>
+          )}
         </Box>
       </Drawer>
     </>

@@ -6,6 +6,7 @@ import {
   CardContent,
   Typography,
   CardActions,
+  InputLabel,
   Select,
   MenuItem,
 } from '@mui/material'
@@ -13,14 +14,12 @@ import React from 'react'
 import * as axios from 'axios'
 import { toast } from 'react-toastify'
 import { useForm } from 'react-hook-form'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
-
-const EditTeacher = () => {
-  const { id } = useParams()
+const AddTeacher = () => {
   const navigate = useNavigate()
+  const { register, handleSubmit } = useForm()
   const [school, setSchool] = React.useState([])
-  const { setValue, register, handleSubmit } = useForm()
 
   const GetSchoolData = async () => {
     await axios
@@ -29,49 +28,50 @@ const EditTeacher = () => {
       .catch((err) => toast.error(err))
   }
 
-  const GetTeacherById = React.useCallback(async () => {
+  const onSubmit = async (data) => {
+    const formData = new FormData()
+    formData.append('file', data.file[0])
+
     await axios
-      .get(`${process.env.REACT_APP_API}/student/teacherbystudent/${id}`)
+      .post(`${process.env.REACT_APP_API}/files/upload`, formData)
       .then((res) => {
-        const fields = [
-          'teacher_thai_firstname',
-          'teache_thai_lastname',
-          'teacher_nick_name',
-        ]
-        fields.forEach((field) => {
-          setValue(field, res.data[0].teacher[field])
-        })
+        axios
+          .post(`${process.env.REACT_APP_API}/teacher/create`, {
+            teacher_thai_firstname: data.teacher_thai_firstname,
+            teache_thai_lastname: data.teacher_thai_lastname,
+            teacher_nick_name: data.teacher_nick_name,
+            teacher_nickname_sound_path: 'string',
+            teacher_image_path: `${process.env.REACT_APP_API}/files/upload/${res.data.path}`,
+            school: data.school_id,
+          })
+          .then((item) => {
+            axios.post(`${process.env.REACT_APP_API}/user/create`, {
+              user_loginname: data.user_loginname,
+              user_password: data.user_password,
+              user_full_name: data.user_full_name,
+              user_email: data.user_email,
+              user_telephone: data.user_telephone,
+              user_role: 'TEACHER',
+              user_image_path: `${process.env.REACT_APP_API}/files/upload/${res.data.path}`,
+              teacher: item.data.teacher_id,
+              school: data.school,
+            })
+          })
+        toast.success('เพิ่มข้อมูลคุณครูสำเร็จ')
+        navigate('/school')
       })
       .catch((err) => {
         toast.error(err)
       })
-  }, [id, setValue])
-
-   const onEditTeacher = async (data) => {
-     await axios
-       .patch(`${process.env.REACT_APP_API}/teacher/edit/${id}`, {
-         teacher_thai_firstname: data.teacher_thai_firstname,
-         teache_thai_lastname: data.teache_thai_lastname,
-         teacher_nick_name: data.teacher_nick_name,
-         teacher_nickname_sound_path: 'string',
-         teacher_image_path: 'string',
-         school: data.school_id,
-       })
-       .then(async () => {
-         await toast.success('บันทึกข้อมูลเรียบร้อยแล้ว')
-         await navigate(`/teacher/profile/${id}`)
-       })
-       .catch((err) => toast.error(err))
-   }
+  }
 
   React.useEffect(() => {
-    GetTeacherById()
     GetSchoolData()
-  }, [GetTeacherById, id])
+  }, [])
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onEditTeacher)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Card>
           <CardContent sx={{ padding: 4 }}>
             <Typography gutterBottom variant='h6'>
@@ -83,6 +83,59 @@ const EditTeacher = () => {
               columnSpacing={{ xs: 1, sm: 2, md: 3 }}
             >
               <Grid item xs={6}>
+                <InputLabel size='small'>ชื่อผู้ใช้งาน</InputLabel>
+                <TextField
+                  style={{ marginTop: 16 }}
+                  fullWidth
+                  type='text'
+                  size='small'
+                  {...register('user_loginname')}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <InputLabel size='small'>รหัสผ่าน</InputLabel>
+                <TextField
+                  style={{ marginTop: 16 }}
+                  fullWidth
+                  type='password'
+                  size='small'
+                  {...register('user_password')}
+                />
+              </Grid>
+              <br />
+              <Grid item xs={6}>
+                <InputLabel size='small'>ชื่อเต็ม</InputLabel>
+                <TextField
+                  style={{ marginTop: 16 }}
+                  fullWidth
+                  type='text'
+                  size='small'
+                  {...register('user_full_name')}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <InputLabel size='small'>อีเมลผู้ใช้งาน</InputLabel>
+                <TextField
+                  style={{ marginTop: 16 }}
+                  fullWidth
+                  type='text'
+                  size='small'
+                  {...register('user_email')}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <InputLabel size='small'>เบอร์โทรศัพท์</InputLabel>
+                <TextField
+                  style={{ marginTop: 16 }}
+                  fullWidth
+                  type='text'
+                  size='small'
+                  {...register('user_telephone')}
+                />
+              </Grid>
+              <br />
+              <Grid item xs={6}>
+                <InputLabel size='small'>ชื่อ</InputLabel>
                 <TextField
                   style={{ marginTop: 16 }}
                   fullWidth
@@ -93,17 +146,19 @@ const EditTeacher = () => {
                 />
               </Grid>
               <Grid item xs={6}>
+                <InputLabel size='small'>นามสกุล</InputLabel>
                 <TextField
                   style={{ marginTop: 16 }}
                   fullWidth
                   type='text'
                   label='นามสกุล'
                   size='small'
-                  {...register('teache_thai_lastname')}
+                  {...register('teacher_thai_lastname')}
                 />
               </Grid>
               <br />
               <Grid item xs={6}>
+                <InputLabel size='small'>ชื่อเล่น</InputLabel>
                 <TextField
                   style={{ marginTop: 16 }}
                   fullWidth
@@ -113,7 +168,8 @@ const EditTeacher = () => {
                   {...register('teacher_nick_name')}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12}>
+                <InputLabel size='small'>โรงเรียน</InputLabel>
                 <Select
                   fullWidth
                   size='small'
@@ -127,6 +183,16 @@ const EditTeacher = () => {
                   ))}
                 </Select>
               </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <InputLabel size='small'>รูปภาพ</InputLabel>
+              <TextField
+                fullWidth
+                type='file'
+                size='small'
+                style={{ marginTop: 16 }}
+                {...register('file')}
+              />
             </Grid>
           </CardContent>
           <CardActions>
@@ -153,4 +219,4 @@ const EditTeacher = () => {
   )
 }
 
-export default EditTeacher
+export default AddTeacher

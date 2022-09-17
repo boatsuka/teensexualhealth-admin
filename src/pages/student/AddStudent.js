@@ -8,17 +8,34 @@ import {
   CardActions,
   Select,
   MenuItem,
-} from "@mui/material";
-import React from "react";
-import * as axios from "axios";
-import { toast } from "react-toastify";
-import { useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+} from '@mui/material'
+import React from 'react'
+import * as axios from 'axios'
+import { toast } from 'react-toastify'
+import { useForm } from 'react-hook-form'
+import { useNavigate, useParams } from 'react-router-dom'
 
 function AddStudent() {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const { register, handleSubmit } = useForm();
+  const { id } = useParams()
+  const navigate = useNavigate()
+  const { register, handleSubmit } = useForm()
+
+  const avatar = [
+    'http://www.teen-sexualhealth.com/api/files/upload/bear.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy1.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy2.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy3.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy4.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy5.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy6.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy7.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy8.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy9.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy10.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy11.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy12.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy13.jpg',
+  ]
 
   const onSubmit = async (data) => {
     await axios
@@ -31,15 +48,16 @@ function AddStudent() {
         student_initial_name: data.student_initial_name,
         teacher_id: id,
         student_dragdrop: data.student_dragdrop,
+        student_avatar_path: data.student_avatar_path,
       })
       .then(() => {
-        toast.success("เพิ่มข้อมูลนักเรียนสำเร็จ");
-        navigate(`/teacher/profile/${id}`);
+        toast.success('เพิ่มข้อมูลนักเรียนสำเร็จ')
+        navigate(`/teacher/profile/${id}`)
       })
       .catch((err) => {
-        toast.error(err);
-      });
-  };
+        toast.error(err)
+      })
+  }
 
   return (
     <div>
@@ -131,6 +149,21 @@ function AddStudent() {
                   <MenuItem value={false}>ทำไม่ได้</MenuItem>
                 </Select>
               </Grid>
+              <Grid item xs={12}>
+                <Select
+                  fullWidth
+                  size='small'
+                  displayEmpty
+                  style={{ marginTop: 16 }}
+                  {...register('student_avatar_path')}
+                >
+                  {avatar.map((item) => (
+                    <MenuItem value={item}>
+                      <img src={item} alt='avatar' width={128} height={128} />
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Grid>
             </Grid>
           </CardContent>
           <CardActions>
@@ -157,4 +190,4 @@ function AddStudent() {
   )
 }
 
-export default AddStudent;
+export default AddStudent

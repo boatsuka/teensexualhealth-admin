@@ -8,44 +8,62 @@ import {
   CardActions,
   Select,
   MenuItem,
-} from "@mui/material";
-import React from "react";
-import * as axios from "axios";
-import { toast } from "react-toastify";
-import { useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+  InputLabel,
+} from '@mui/material'
+import React from 'react'
+import * as axios from 'axios'
+import { toast } from 'react-toastify'
+import { useForm } from 'react-hook-form'
+import { useNavigate, useParams } from 'react-router-dom'
 
 function EditStudent() {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const { setValue, register, handleSubmit } = useForm();
+  const { id } = useParams()
+  const navigate = useNavigate()
+  const { setValue, register, handleSubmit } = useForm()
+
+  const avatar = [
+    'http://www.teen-sexualhealth.com/api/files/upload/bear.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy1.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy2.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy3.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy4.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy5.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy6.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy7.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy8.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy9.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy10.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy11.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy12.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy13.jpg',
+  ]
 
   const GetStudentById = React.useCallback(async () => {
     await axios
-      .get(`${process.env.REACT_APP_API}/student/teacherbystudent/${id}`)
+      .get(`${process.env.REACT_APP_API}/student/${id}`)
       .then((res) => {
         const fields = [
-          "student_fisrtname",
-          "student_lastname",
-          "student_level",
-          "student_nickname",
-          "student_study_year",
-          "student_initial_name",
-          "teacher_id",
-          "student_dragdrop",
-        ];
+          'student_fisrtname',
+          'student_lastname',
+          'student_level',
+          'student_nickname',
+          'student_study_year',
+          'student_initial_name',
+          'teacher_id',
+          'student_dragdrop',
+        ]
         fields.forEach((field) => {
-          setValue(field, res.data[0][field]);
-        });
+          setValue(field, res.data[field])
+        })
       })
       .catch((err) => {
-        toast.error(err);
-      });
-  }, [id, setValue]);
+        toast.error(err)
+      })
+  }, [id, setValue])
 
   const onEditStudent = async (data) => {
     await axios
-      .patch(`${process.env.REACT_APP_API}/school/${id}`, {
+      .patch(`${process.env.REACT_APP_API}/student/${id}`, {
         student_fisrtname: data.student_fisrtname,
         student_lastname: data.student_lastname,
         student_level: data.student_level,
@@ -54,24 +72,25 @@ function EditStudent() {
         student_initial_name: data.student_initial_name,
         teacher_id: id,
         student_dragdrop: data.student_dragdrop,
+        student_avatar_path: data.student_avatar_path,
       })
       .then(async () => {
-        await toast.success("บันทึกข้อมูลเรียบร้อยแล้ว");
-        await navigate(`/student/profile/${id}`);
+        await toast.success('บันทึกข้อมูลเรียบร้อยแล้ว')
+        await navigate(`/student/profile/${id}`)
       })
-      .catch((err) => toast.error(err));
-  };
+      .catch((err) => toast.error(err))
+  }
 
   React.useEffect(() => {
-    GetStudentById();
-  }, [GetStudentById, id]);
+    GetStudentById()
+  }, [GetStudentById, id])
 
   return (
     <div>
       <form onSubmit={handleSubmit(onEditStudent)}>
         <Card>
           <CardContent sx={{ padding: 4 }}>
-            <Typography gutterBottom variant="h6">
+            <Typography gutterBottom variant='h6'>
               ฟอร์มกรอกข้อมูลลงทะเบียนนักเรียน
             </Typography>
             <Grid
@@ -80,62 +99,65 @@ function EditStudent() {
               columnSpacing={{ xs: 1, sm: 2, md: 3 }}
             >
               <Grid item xs={6}>
+                <InputLabel>เพศนักเรียน</InputLabel>
                 <Select
                   fullWidth
-                  size="small"
+                  size='small'
                   style={{ marginTop: 16 }}
-                  {...register("student_initial_name")}
+                  {...register('student_initial_name')}
                 >
-                  <MenuItem value="เด็กชาย">เด็กชาย</MenuItem>
-                  <MenuItem value="เด็กหญิง">เด็กหญิง</MenuItem>
+                  <MenuItem value='เด็กชาย'>เด็กชาย</MenuItem>
+                  <MenuItem value='เด็กหญิง'>เด็กหญิง</MenuItem>
                 </Select>
               </Grid>
               <Grid item xs={6}>
+                <InputLabel>ชื่อ</InputLabel>
                 <TextField
                   style={{ marginTop: 16 }}
                   fullWidth
-                  type="text"
-                  label="ชื่อ"
-                  size="small"
-                  {...register("student_fisrtname")}
+                  type='text'
+                  size='small'
+                  {...register('student_fisrtname')}
                 />
               </Grid>
               <Grid item xs={6}>
+                <InputLabel>นามสกุล</InputLabel>
                 <TextField
                   style={{ marginTop: 16 }}
                   fullWidth
-                  type="text"
-                  label="นามสกุล"
-                  size="small"
-                  {...register("student_lastname")}
+                  type='text'
+                  size='small'
+                  {...register('student_lastname')}
                 />
               </Grid>
               <br />
               <Grid item xs={6}>
+                <InputLabel>ชื่อเล่น</InputLabel>
                 <TextField
                   style={{ marginTop: 16 }}
                   fullWidth
-                  label="ชื่อเล่น"
-                  type="text"
-                  size="small"
-                  {...register("student_nickname")}
+                
+                  type='text'
+                  size='small'
+                  {...register('student_nickname')}
                 />
               </Grid>
               <Grid item xs={6}>
+                <InputLabel>ระดับความสามารถ</InputLabel>
                 <TextField
                   fullWidth
-                  label="ระดับความสามารถ"
-                  size="small"
+                  size='small'
                   style={{ marginTop: 16 }}
-                  {...register("student_level")}
+                  {...register('student_level')}
                 />
               </Grid>
               <Grid item xs={6}>
+                <InputLabel>ระดับชั้นปี</InputLabel>
                 <Select
                   fullWidth
-                  size="small"
+                  size='small'
                   style={{ marginTop: 16 }}
-                  {...register("student_initial_name")}
+                  {...register('student_study_year')}
                 >
                   <MenuItem value={1}>มัธยมศึกษาปีที่ 1</MenuItem>
                   <MenuItem value={2}>มัธยมศึกษาปีที่ 2</MenuItem>
@@ -146,14 +168,31 @@ function EditStudent() {
                 </Select>
               </Grid>
               <Grid item xs={12}>
+                <InputLabel>ความสามารถในการตอบคำถาม</InputLabel>
                 <Select
                   fullWidth
-                  size="small"
+                  size='small'
                   style={{ marginTop: 16 }}
-                  {...register("student_dragdrop")}
+                  {...register('student_dragdrop')}
                 >
                   <MenuItem value={true}>ทำได้</MenuItem>
                   <MenuItem value={false}>ทำไม่ได้</MenuItem>
+                </Select>
+              </Grid>
+              <Grid item xs={12}>
+                <InputLabel>รูปภาพ</InputLabel>
+                <Select
+                  fullWidth
+                  size='small'
+                  displayEmpty
+                  style={{ marginTop: 16 }}
+                  {...register('student_avatar_path')}
+                >
+                  {avatar.map((item) => (
+                    <MenuItem value={item}>
+                      <img src={item} alt='avatar' width={128} height={128} />
+                    </MenuItem>
+                  ))}
                 </Select>
               </Grid>
             </Grid>
@@ -161,17 +200,17 @@ function EditStudent() {
           <CardActions>
             <Button
               fullWidth
-              variant="contained"
-              color="primary"
-              type="submit"
+              variant='contained'
+              color='primary'
+              type='submit'
               sx={{ marginRight: 1 }}
             >
               บันทึก
             </Button>
             <Button
-              variant="outlined"
+              variant='outlined'
               fullWidth
-              onClick={() => navigate("/school")}
+              onClick={() => navigate('/school')}
             >
               ยกเลิก
             </Button>
@@ -179,7 +218,7 @@ function EditStudent() {
         </Card>
       </form>
     </div>
-  );
+  )
 }
 
-export default EditStudent;
+export default EditStudent

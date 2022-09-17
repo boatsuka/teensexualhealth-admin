@@ -10,9 +10,12 @@ import {
 } from '@mui/material'
 import React from 'react'
 import * as axios from 'axios'
+import jwt_decode from 'jwt-decode'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 
 function Login() {
+  const navigate = useNavigate()
   const { register, handleSubmit } = useForm()
   const onSubmit = async (data) => {
     await axios
@@ -20,11 +23,32 @@ function Login() {
         username: data.username,
         password: data.password,
       })
-      .then((res) => console.log(res.data))
+      .then((res) => {
+        const data = jwt_decode(res.data.access_token)
+
+        localStorage.setItem('user_id', data.user_id)
+        localStorage.setItem('user_role', data.user_role)
+        localStorage.setItem('teacher_id', data.teacher.teacher_id)
+        localStorage.setItem('school_id', data.school.school_id)
+
+        switch (data.user_role) {
+          case 'SUPER_ADMIN_USER':
+            navigate('/school')
+            break
+          case 'ADMIN_USER_ROLE':
+            navigate(`/school/profile/${data.school.school_id}`)
+            break
+          case 'NORMAL_USER_ROLE':
+            navigate(`/teacher/profile/${data.teacher.teacher_id}`)
+            break
+          default:
+            break
+        }
+      })
   }
   return (
     <React.Fragment>
-      <form handleSubmit={onSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Box
           sx={{
             display: 'flex',
@@ -37,7 +61,7 @@ function Login() {
           <Card sx={{ maxWidth: 345 }}>
             <CardMedia
               sx={{ height: 200 }}
-              image='/static/img/next_login.jpg'
+              image='http://teen-sexualhealth.com/api/files/upload/module5.png'
               title='Contemplative Reptile'
             />
             <CardContent>
@@ -82,7 +106,7 @@ function Login() {
             </CardContent>
           </Card>
 
-          <style jsx global>
+          <style>
             {`
               body {
                 min-height: 100vh;
