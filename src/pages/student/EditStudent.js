@@ -17,7 +17,7 @@ import { useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 
 function EditStudent() {
-  const { id } = useParams()
+  const { id, teacherId } = useParams()
   const navigate = useNavigate()
   const { setValue, register, handleSubmit } = useForm()
 
@@ -75,7 +75,7 @@ function EditStudent() {
       })
       .then(async () => {
         await toast.success('บันทึกข้อมูลเรียบร้อยแล้ว')
-        await navigate(`/student/profile/${id}`)
+        await navigate(`/teacher/profile/${teacherId}`)
       })
       .catch((err) => toast.error(err))
   }

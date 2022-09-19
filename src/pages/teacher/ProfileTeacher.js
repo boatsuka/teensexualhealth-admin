@@ -76,7 +76,7 @@ const ProfileTeacher = () => {
           <Button
             variant='contained'
             size='medium'
-            onClick={() => navigate(`/student/edit/${params.id}`)}
+            onClick={() => navigate(`/student/edit/${params.id}/teacher/${id}`)}
           >
             แก้ไขข้อมูล
           </Button>

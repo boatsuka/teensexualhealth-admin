@@ -51,7 +51,7 @@ function App() {
             <Route path='student'>
               <Route index element={<Student />} />
               <Route path='add/:id' element={<AddStudent />} />
-              <Route path='edit/:id' element={<EditStudent />} />
+              <Route path='edit/:id/teacher/:id' element={<EditStudent />} />
               <Route path='profile/:id' element={<ProfileStudent />} />
               <Route
                 path=':studentId/module/:moduleId'

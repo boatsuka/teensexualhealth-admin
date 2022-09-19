@@ -110,8 +110,6 @@ const SubModuleStudent = () => {
           })
       }, [setValue, setData, setStudent])
 
-      console.log(data.student_submodule_pass)
-
     const GetModuleById = async () => {
         await axios
             .get(
