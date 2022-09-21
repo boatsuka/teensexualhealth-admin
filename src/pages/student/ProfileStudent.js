@@ -8,6 +8,7 @@ import {
   InputLabel,
   Box,
   Link,
+  Avatar,
 } from '@mui/material'
 import React from 'react'
 import * as axios from 'axios'
@@ -114,25 +115,19 @@ const ProfileStudent = () => {
     <div>
       <div>
         <Card>
-          <CardContent sx={{ padding: 4 }}>
+          <CardContent sx={{ padding: 2 }}>
             <Box display='flex'>
               <Box
                 flex={1}
                 justifyItems='center'
-                sx={{ p: 2, mr: 1, border: '1px dashed grey' }}
               >
-                <Box sx={{ p: 3, mr: 4, ml: 4, mt: 2 }}>
+                <Box sx={{ mr: 4, ml: 8, mt: 2, mb: 2 }}>
                   <Link>
-                    <img
-                      src={student.student_avatar_path}
-                      alt='student-logo'
-                      width={200}
-                      height={200}
-                    />
+                    <Avatar src={student.student_avatar_path} sx={{ width: 200, height: 200 }}/>
                   </Link>
                 </Box>
               </Box>
-              <Box flex={2} mr='0.5em'>
+              <Box flex={2}>
                 <Grid
                   container
                   rowSpacing={1}
