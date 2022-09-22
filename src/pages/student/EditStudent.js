@@ -135,14 +135,13 @@ function EditStudent() {
                 <TextField
                   style={{ marginTop: 16 }}
                   fullWidth
-                
                   type='text'
                   size='small'
                   {...register('student_nickname')}
                 />
               </Grid>
               <Grid item xs={6}>
-              <InputLabel>ระดับความสามารถ</InputLabel>
+                <InputLabel>ระดับความสามารถ</InputLabel>
                 <Select
                   fullWidth
                   size='small'
