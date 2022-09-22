@@ -76,7 +76,7 @@ const ProfileTeacher = () => {
           <Button
             variant='contained'
             size='medium'
-            onClick={() => navigate(`/student/edit/${params.id}/teacher/${id}`)}
+            onClick={() => navigate(`/student/edit/${params.id}`)}
           >
             แก้ไขข้อมูล
           </Button>
@@ -94,7 +94,7 @@ const ProfileTeacher = () => {
   ]
 
   const onDelete = async (id) => {
-    await axios.delete(`${process.env.REACT_APP_API}/student/remove-hard/${id}`).then((res) => {
+    await axios.delete(`${process.env.REACT_APP_API}/student/remove/${id}`).then((res) => {
       toast.success('ลบข้อมูลแล้ว')
     }).catch((err) => {
       toast.error(err)
