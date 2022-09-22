@@ -90,12 +90,9 @@ const ProfileStudent = () => {
       .catch((err) => {
         toast.error(err)
       })
-  }, [id, setValue])
+  }, [id])
 
-  React.useEffect(() => {
-    GetTeacherById()
-  }, [GetTeacherById, id])
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const GetModuleById = async () => {
     await axios
       .get(`${process.env.REACT_APP_API}/student/info/${id}`)
@@ -108,8 +105,10 @@ const ProfileStudent = () => {
   }
 
   React.useEffect(() => {
+    GetTeacherById()
     GetModuleById()
-  })
+  }, [GetModuleById, GetTeacherById, id])
+
 
   return (
     <div>
@@ -175,6 +174,16 @@ const ProfileStudent = () => {
                       disabled
                       style={{ marginTop: 10 }}
                       {...register('student_level')}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <InputLabel>รูปภาพ</InputLabel>
+                    <TextField
+                      fullWidth
+                      size='small'
+                      disabled
+                      style={{ marginTop: 10 }}
+                      {...register('student_avatar_path')}
                     />
                   </Grid>
                 </Grid>

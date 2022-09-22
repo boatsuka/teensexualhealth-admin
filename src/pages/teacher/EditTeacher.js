@@ -28,6 +28,8 @@ const AddTeacher = () => {
       .catch((err) => toast.error(err))
   }
 
+  
+
   const onSubmit = async (data) => {
     const formData = new FormData()
     formData.append('file', data.file[0])
@@ -51,7 +53,7 @@ const AddTeacher = () => {
               user_full_name: data.user_full_name,
               user_email: data.user_email,
               user_telephone: data.user_telephone,
-              user_role: 'TEACHER',
+              user_role: 'NORMAL_USER_ROLE',
               user_image_path: `${process.env.REACT_APP_API}/files/upload/${res.data.path}`,
               teacher: item.data.teacher_id,
               school: data.school,

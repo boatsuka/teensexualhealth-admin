@@ -95,9 +95,8 @@ const SubModuleStudent = () => {
               'student_nickname',
               'student_study_year',
               'student_initial_name',
-              'teacher_id',
+              'teacher',
               'student_dragdrop',
-              'student_avatar_path',
             ]
             fields.forEach((field) => {
               setData(res.data[0])
@@ -152,11 +151,11 @@ const SubModuleStudent = () => {
                         >
                             <Box sx={{ p: 3, mr: 4, ml: 4, mt: 2 }}>
                                 <Link>
-                                    <img
+                                    {/* <img
                                         src={student.student_avatar_path}
                                         alt='student-logo'
                                         width={200}
-                                        height={200} />
+                                        height={200} /> */}
                                 </Link>
                             </Box>
                         </Box>
@@ -212,7 +211,7 @@ const SubModuleStudent = () => {
                 </CardContent>
                 <CardActions>
                    {
-                    data.student_submodule_pass ?  <>
+                    data.student_submodule_pass === 1 ?  <>
                     <Button
                          fullWidth
                          variant='contained'
