@@ -53,7 +53,7 @@ const ProfileStudent = () => {
             color='success'
             onClick={() => navigate(`/student/${id}/module/${params.id}`)}
           >
-            ดูข้อมูลหน่วยการเรีนรู้ย่อย
+            ดูข้อมูลหน่วยการเรียนรู้ย่อย
           </Button>
           <Button
             variant='contained'
