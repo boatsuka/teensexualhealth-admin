@@ -9,75 +9,56 @@ import {
   Select,
   MenuItem,
   InputLabel,
-  NativeSelect,
-} from "@mui/material";
-import React from "react";
-import * as axios from "axios";
-import { toast } from "react-toastify";
-import { Controller, useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+} from '@mui/material'
+import React from 'react'
+import * as axios from 'axios'
+import { toast } from 'react-toastify'
+import { useForm } from 'react-hook-form'
+import { useNavigate, useParams } from 'react-router-dom'
 
 function EditStudent() {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const [teacher, setTeacher] = React.useState([])
-  const [data, setData] = React.useState([])
-  const { setValue, register, handleSubmit } = useForm();
+  const { id, teacherId } = useParams()
+  const navigate = useNavigate()
+  const { setValue, register, handleSubmit } = useForm()
 
   const avatar = [
-    "http://www.teen-sexualhealth.com/api/files/upload/bear.jpg",
-    "http://www.teen-sexualhealth.com/api/files/upload/boy1.jpg",
-    "http://www.teen-sexualhealth.com/api/files/upload/boy2.jpg",
-    "http://www.teen-sexualhealth.com/api/files/upload/boy3.jpg",
-    "http://www.teen-sexualhealth.com/api/files/upload/boy4.jpg",
-    "http://www.teen-sexualhealth.com/api/files/upload/boy5.jpg",
-    "http://www.teen-sexualhealth.com/api/files/upload/boy6.jpg",
-    "http://www.teen-sexualhealth.com/api/files/upload/boy7.jpg",
-    "http://www.teen-sexualhealth.com/api/files/upload/boy8.jpg",
-    "http://www.teen-sexualhealth.com/api/files/upload/boy9.jpg",
-    "http://www.teen-sexualhealth.com/api/files/upload/boy10.jpg",
-    "http://www.teen-sexualhealth.com/api/files/upload/boy11.jpg",
-    "http://www.teen-sexualhealth.com/api/files/upload/boy12.jpg",
-    "http://www.teen-sexualhealth.com/api/files/upload/boy13.jpg",
-    "http://www.teen-sexualhealth.com/api/files/upload/girl1.jpg",
-    "http://www.teen-sexualhealth.com/api/files/upload/girl2.jpg",
-    "http://www.teen-sexualhealth.com/api/files/upload/girl3.jpg",
-    "http://www.teen-sexualhealth.com/api/files/upload/girl4.jpg",
-    "http://www.teen-sexualhealth.com/api/files/upload/girl5.jpg",
-    "http://www.teen-sexualhealth.com/api/files/upload/girl6.jpg",
-    "http://www.teen-sexualhealth.com/api/files/upload/girl7.jpg",
-    "http://www.teen-sexualhealth.com/api/files/upload/girl8.jpg",
-    "http://www.teen-sexualhealth.com/api/files/upload/girl9.jpg",
-    "http://www.teen-sexualhealth.com/api/files/upload/girl10.jpg",
-  ];
-
-  const GetLocalStorage = () => {
-    setTeacher(localStorage.getItem('teacher_id'))
-  }
+    'http://www.teen-sexualhealth.com/api/files/upload/bear.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy1.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy2.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy3.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy4.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy5.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy6.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy7.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy8.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy9.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy10.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy11.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy12.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/boy13.jpg',
+  ]
 
   const GetStudentById = React.useCallback(async () => {
     await axios
       .get(`${process.env.REACT_APP_API}/student/${id}`)
       .then((res) => {
         const fields = [
-          "student_fisrtname",
-          "student_lastname",
-          "student_level",
-          "student_dragdrop",
-          "student_nickname",
-          "student_study_year",
-          "student_initial_name",
-          "student_name_sound_path",
-        ];
+          'student_fisrtname',
+          'student_lastname',
+          'student_level',
+          'student_nickname',
+          'student_study_year',
+          'student_initial_name',
+          'student_dragdrop',
+        ]
         fields.forEach((field) => {
-          setData(res.data)
-          setValue(field, res.data[field]);
-        });
+          setValue(field, res.data[field])
+        })
       })
       .catch((err) => {
-        toast.error(err);
-      });
-  }, [id, setValue]);
+        toast.error(err)
+      })
+  }, [id, setValue])
 
   const onEditStudent = async (data) => {
     await axios
@@ -88,28 +69,28 @@ function EditStudent() {
         student_nickname: data.student_nickname,
         student_study_year: data.student_study_year,
         student_initial_name: data.student_initial_name,
+        teacher: id,
         student_dragdrop: data.student_dragdrop,
         student_avatar_path: data.student_avatar_path,
       })
-      .then(async (res) => {
+      .then(async () => {
         await toast.success('บันทึกข้อมูลเรียบร้อยแล้ว')
-        await navigate(`/teacher/profile/${teacher}`)
+        await navigate(`/teacher/profile/${teacherId}`)
       })
-      .catch((err) => toast.error(err));
-  };
+      .catch((err) => toast.error(err))
+  }
 
   React.useEffect(() => {
-    GetStudentById();
-    GetLocalStorage();
-  }, [GetStudentById, id]);
+    GetStudentById()
+  }, [GetStudentById, id])
 
   return (
     <div>
       <form onSubmit={handleSubmit(onEditStudent)}>
         <Card>
           <CardContent sx={{ padding: 4 }}>
-            <Typography gutterBottom variant="h6">
-              ฟอร์มกรอกข้อมูลลงทะเบียนนักเรียน {data.student_nickname}
+            <Typography gutterBottom variant='h6'>
+              ฟอร์มกรอกข้อมูลลงทะเบียนนักเรียน
             </Typography>
             <Grid
               container
@@ -118,27 +99,24 @@ function EditStudent() {
             >
               <Grid item xs={6}>
                 <InputLabel>เพศนักเรียน</InputLabel>
-                <NativeSelect
+                <Select
                   fullWidth
-                  size="small"
+                  size='small'
                   style={{ marginTop: 16 }}
-                  defaultValue={data.student_initial_name}
-                  {...register("student_initial_name")}
+                  {...register('student_initial_name')}
                 >
-                  <option key="เด็กชาย" value="เด็กชาย">เด็กชาย</option>
-                  <option key="เด็กหญิง" value="เด็กหญิง">เด็กหญิง</option>
-                  <option key="นาย" value="นาย">นาย</option>
-                  <option key="นางสาว" value="นางสาว">นางสาว</option>
-                </NativeSelect>
+                  <MenuItem value='เด็กชาย'>เด็กชาย</MenuItem>
+                  <MenuItem value='เด็กหญิง'>เด็กหญิง</MenuItem>
+                </Select>
               </Grid>
               <Grid item xs={6}>
                 <InputLabel>ชื่อ</InputLabel>
                 <TextField
                   style={{ marginTop: 16 }}
                   fullWidth
-                  type="text"
-                  size="small"
-                  {...register("student_fisrtname")}
+                  type='text'
+                  size='small'
+                  {...register('student_fisrtname')}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -146,9 +124,9 @@ function EditStudent() {
                 <TextField
                   style={{ marginTop: 16 }}
                   fullWidth
-                  type="text"
-                  size="small"
-                  {...register("student_lastname")}
+                  type='text'
+                  size='small'
+                  {...register('student_lastname')}
                 />
               </Grid>
               <br />
@@ -157,68 +135,64 @@ function EditStudent() {
                 <TextField
                   style={{ marginTop: 16 }}
                   fullWidth
-                  type="text"
-                  size="small"
-                  {...register("student_nickname")}
+                  type='text'
+                  size='small'
+                  {...register('student_nickname')}
                 />
               </Grid>
               <Grid item xs={6}>
                 <InputLabel>ระดับความสามารถ</InputLabel>
-                <NativeSelect
+                <Select
                   fullWidth
-                  size="small"
-                  label="ระดับความสามารถ"
+                  size='small'
+                  label='ระดับความสามารถ'
                   style={{ marginTop: 16 }}
-                  defaultValue={data.student_level}
-                  {...register("student_level")}
+                  {...register('student_level')}
                 >
-                  <option key={0} value={0}>Basic</option>
-                  <option key={1} value={1}>Advance</option>
-                </NativeSelect>
+                  <MenuItem value={0}>Basic</MenuItem>
+                  <MenuItem value={1}>Advance</MenuItem>
+                </Select>
               </Grid>
               <Grid item xs={6}>
                 <InputLabel>ระดับชั้นปี</InputLabel>
-                <NativeSelect
+                <Select
                   fullWidth
-                  size="small"
+                  size='small'
                   style={{ marginTop: 16 }}
-                  defaultValue={data.student_study_year}
-                  {...register("student_study_year")}
+                  {...register('student_study_year')}
                 >
-                  <option key={1} value={1}>มัธยมศึกษาปีที่ 1</option>
-                  <option key={2} value={2}>มัธยมศึกษาปีที่ 2</option>
-                  <option key={3} value={3}>มัธยมศึกษาปีที่ 3</option>
-                  <option key={4} value={4}>มัธยมศึกษาปีที่ 4</option>
-                  <option key={5} value={5}>มัธยมศึกษาปีที่ 5</option>
-                  <option key={6} value={6}>มัธยมศึกษาปีที่ 6</option>
-                </NativeSelect>
+                  <MenuItem value={1}>มัธยมศึกษาปีที่ 1</MenuItem>
+                  <MenuItem value={2}>มัธยมศึกษาปีที่ 2</MenuItem>
+                  <MenuItem value={3}>มัธยมศึกษาปีที่ 3</MenuItem>
+                  <MenuItem value={4}>มัธยมศึกษาปีที่ 4</MenuItem>
+                  <MenuItem value={5}>มัธยมศึกษาปีที่ 5</MenuItem>
+                  <MenuItem value={6}>มัธยมศึกษาปีที่ 6</MenuItem>
+                </Select>
               </Grid>
               <Grid item xs={12}>
-                <InputLabel>ความสามารถในการ dragdrop</InputLabel>
-                <NativeSelect
+                <InputLabel>ความสามารถในการตอบคำถาม</InputLabel>
+                <Select
                   fullWidth
-                  size="small"
+                  size='small'
                   style={{ marginTop: 16 }}
-                  defaultValue={data.student_dragdrop}
-                  {...register("student_dragdrop")}
+                  {...register('student_dragdrop')}
                 >
-                  <option value={true}>ทำได้</option>
-                  <option value={false}>ทำไม่ได้</option>
-                </NativeSelect>
+                  <MenuItem value={true}>ทำได้</MenuItem>
+                  <MenuItem value={false}>ทำไม่ได้</MenuItem>
+                </Select>
               </Grid>
               <Grid item xs={12}>
                 <InputLabel>รูปภาพ</InputLabel>
                 <Select
                   fullWidth
-                  size="small"
+                  size='small'
                   displayEmpty
                   style={{ marginTop: 16 }}
-                  defaultValue={data.student_avatar_path}
-                  {...register("student_avatar_path")}
+                  {...register('student_avatar_path')}
                 >
                   {avatar.map((item, index) => (
                     <MenuItem key={index} value={item}>
-                      <img src={item} alt="avatar" width={128} height={128} />
+                      <img src={item} alt='avatar' width={128} height={128} />
                     </MenuItem>
                   ))}
                 </Select>
@@ -228,18 +202,25 @@ function EditStudent() {
           <CardActions>
             <Button
               fullWidth
-              variant="contained"
-              color="primary"
-              type="submit"
+              variant='contained'
+              color='primary'
+              type='submit'
               sx={{ marginRight: 1 }}
             >
               บันทึก
+            </Button>
+            <Button
+              variant='outlined'
+              fullWidth
+              onClick={() => navigate('/school')}
+            >
+              ยกเลิก
             </Button>
           </CardActions>
         </Card>
       </form>
     </div>
-  );
+  )
 }
 
-export default EditStudent;
+export default EditStudent
