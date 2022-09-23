@@ -35,6 +35,16 @@ function AddStudent() {
     'http://www.teen-sexualhealth.com/api/files/upload/boy11.jpg',
     'http://www.teen-sexualhealth.com/api/files/upload/boy12.jpg',
     'http://www.teen-sexualhealth.com/api/files/upload/boy13.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/girl1.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/girl2.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/girl3.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/girl4.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/girl5.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/girl6.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/girl7.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/girl8.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/girl9.jpg',
+    'http://www.teen-sexualhealth.com/api/files/upload/girl10.jpg',
   ]
 
   const onSubmit = async (data) => {
